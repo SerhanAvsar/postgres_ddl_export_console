@@ -1,19 +1,18 @@
-﻿Programın Dosyalarının Tasarımı Son Halde Bu Şekilde Yapmaya Çalışacağım
+﻿## Projenin Dosyalarının Tasarımı Son Halde Bu Şekilde Yapmaya Çalışacağım
 
-
+```text
 PgDdlExporter
 │
-├── Program.cs                                                     
+├── Program.cs                      # Uygulama giriş noktası
+├── appsettings.json                # Bağlantı dizesi, dışa aktarma yolu ve log ayarları
+├── .gitignore                      
 │
-├── appsettings.json                    // Bağlantı string'i, export path, log ayarları                     ✓
-├── .gitignore                          
+├── Config/
+│   ├── DatabaseConfig.cs           
+│   └── ExportConfig.cs              
 │
-├── Config
-│   ├── DatabaseConfig.cs                                                                                   ✓
-│   └── ExportConfig.cs                 // POCO: OutputPath, hangi nesne tipleri export edilecek            ✓
-│
-├── Models
-│   ├── DatabaseObject.cs               
+├── Models/
+│   ├── DatabaseObject.cs           
 │   ├── TableInfo.cs
 │   ├── ColumnInfo.cs
 │   ├── ViewInfo.cs
@@ -24,11 +23,11 @@ PgDdlExporter
 │   ├── SequenceInfo.cs
 │   ├── IndexInfo.cs
 │   ├── ConstraintInfo.cs
-│   └── PgTypeInfo.cs                   
+│   └── PgTypeInfo.cs
 │
-├── Queries                             
-│   ├── TableQueries.cs
-│   ├── ColumnQueries.cs
+├── Queries/
+│   ├── TableQueries.cs             
+│   ├── ColumnQueries.cs            
 │   ├── ViewQueries.cs
 │   ├── FunctionQueries.cs
 │   ├── ProcedureQueries.cs
@@ -39,31 +38,31 @@ PgDdlExporter
 │   ├── SchemaQueries.cs
 │   └── PgTypeQueries.cs
 │
-├── DdlBuilders                         
-│   ├── IDdlBuilder.cs
-│   ├── TableDdlBuilder.cs
-│   ├── ViewDdlBuilder.cs               
-│   ├── FunctionDdlBuilder.cs           
+├── DdlBuilders/
+│   ├── IDdlBuilder.cs              
+│   ├── TableDdlBuilder.cs          
+│   ├── ViewDdlBuilder.cs           
+│   ├── FunctionDdlBuilder.cs
 │   ├── ProcedureDdlBuilder.cs
-│   ├── TriggerDdlBuilder.cs            
-│   ├── IndexDdlBuilder.cs              
-│   ├── ConstraintDdlBuilder.cs         
+│   ├── TriggerDdlBuilder.cs
+│   ├── IndexDdlBuilder.cs
+│   ├── ConstraintDdlBuilder.cs
 │   ├── SequenceDdlBuilder.cs
 │   ├── SchemaDdlBuilder.cs
 │   └── PgTypeDdlBuilder.cs
 │
-├── Services
-│   ├── ConnectionService.cs
-│   ├── DirectoryService.cs
-│   ├── FileService.cs
-│   ├── SqlFormatter.cs                 
-│   ├── ExportOrderResolver.cs          
-│   └── ExportManager.cs                
+├── Services/
+│   ├── ConnectionService.cs        
+│   ├── DirectoryService.cs         
+│   ├── FileService.cs              
+│   ├── SqlFormatter.cs             
+│   ├── ExportOrderResolver.cs      
+│   └── ExportManager.cs            
 │
-├── Exporters                           
-│   ├── IExporter.cs
-│   ├── SchemaExporter.cs
-│   ├── TableExporter.cs
+├── Exporters/
+│   ├── IExporter.cs                
+│   ├── SchemaExporter.cs           
+│   ├── TableExporter.cs            
 │   ├── ViewExporter.cs
 │   ├── FunctionExporter.cs
 │   ├── ProcedureExporter.cs
@@ -73,15 +72,15 @@ PgDdlExporter
 │   ├── SequenceExporter.cs
 │   └── PgTypeExporter.cs
 │
-├── Extensions                          
-│   └── NpgsqlDataReaderExtensions.cs   
+├── Extensions/
+│   └── NpgsqlDataReaderExtensions.cs 
 │
-├── Helpers
-│   ├── Logger.cs                       
-│   ├── PathHelper.cs
-│   └── SqlHelper.cs
+├── Helpers/
+│   ├── Logger.cs                   
+│   ├── PathHelper.cs               
+│   └── SqlHelper.cs                
 │
-└── ExportedDDL/                        
+└── ExportedDDL/                     # Üretilen DDL çıktılarının kayıt klasörü
     ├── 00_Schemas/
     ├── 01_Types/
     ├── 02_Sequences/
@@ -92,3 +91,4 @@ PgDdlExporter
     ├── 07_Functions/
     ├── 08_Procedures/
     └── 09_Triggers/
+```
