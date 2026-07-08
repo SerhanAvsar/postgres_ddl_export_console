@@ -1,0 +1,70 @@
+version: 0{build}
+
+branches:
+  only:
+    - master
+
+max_jobs: 1    
+
+
+configuration: Release
+
+image:
+  - Visual Studio 2019
+
+init:
+  - cmd: echo Appveyor build number is %APPVEYOR_BUILD_NUMBER%
+
+clone_folder: c:\Workspace
+
+shallow_clone: false 
+
+# enable patching of AssemblyInfo.* files
+assembly_info:
+  patch: true
+  assembly_version: '1.0.0.{version}'
+  assembly_informational_version: '1.0.0.{version}'
+  assembly_file_version: '1.0.0.{version}'
+
+ 
+platform: Any CPU
+
+
+
+nuget:
+  account_feed: true
+
+before_build:
+  - cmd: nuget restore -DisableParallelProcessing
+
+build_script:
+  - cmd: msbuild C:\Workspace\src\ConsoleApp\mssql_ddl_export_console.csproj /p:Configuration=%CONFIGURATION% /p:Platform=AnyCPU /p:OutDir=c:\output
+  
+after_build:
+  - ps: $build = @{}
+  - ps: $build.ProjectId = "$Env:APPVEYOR_PROJECT_ID"
+  - ps: $build.ProjectName = "$Env:APPVEYOR_PROJECT_NAME"
+  - ps: $build.ProjectSlug = "$Env:APPVEYOR_PROJECT_SLUG"
+  - ps: $build.BuildId = "$Env:APPVEYOR_BUILD_ID"
+  - ps: $build.BuildNumber  = "$Env:APPVEYOR_BUILD_NUMBER"
+  - ps: $build.BuildVersion  = "$Env:APPVEYOR_BUILD_VERSION"
+  - ps: $build.RepoName  = "$Env:APPVEYOR_REPO_NAME "
+  - ps: $build.RepoBranch  = "$Env:APPVEYOR_REPO_BRANCH"
+  - ps: $build.RepoCommit   = "$Env:APPVEYOR_REPO_COMMIT"
+  - ps: $build.RepoCommitAuthor   = "$Env:APPVEYOR_REPO_COMMIT_AUTHOR"
+  - ps: $build.RepoCommitTimestamp   = "$Env:APPVEYOR_REPO_COMMIT_TIMESTAMP"
+  - ps: $buildJson = ConvertTo-Json $build
+  - ps: $buildJson | Out-File 'C:\output\build.json'
+  - cmd: 7z a ddl_export_console.zip C:\output\*
+  - cmd: appveyor PushArtifact  ddl_export_console.zip -FileName ddl_export_console-%APPVEYOR_BUILD_NUMBER%.zip -DeploymentName ddl_export_console
+
+on_success:
+  - cmd: cd c:\Workspace
+  - cmd: dir
+  - ps : .\tag-repository.ps1
+
+on_finish:
+  - cmd: appveyor AddMessage "=== Worker RDP Info ==="
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+test: off

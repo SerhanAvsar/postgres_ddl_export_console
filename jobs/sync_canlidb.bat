@@ -1,0 +1,1 @@
+call sync.bat master canlidb_all.json > sync_canlidb.log 2>&1

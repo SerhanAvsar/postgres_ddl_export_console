@@ -1,0 +1,1 @@
+call sync.bat dev testdb_all.json > sync_testdb.log 2>&1

@@ -1,0 +1,1 @@
+call sync.bat gecicidb gecicidb_all.json > sync_gecicidb.log 2>&1
