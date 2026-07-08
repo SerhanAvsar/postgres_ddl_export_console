@@ -1,0 +1,6 @@
+﻿{
+  "ServerHost": "sunucuAdresi",
+  "DatabaseName": "Trevoo",
+  "Username": "kullaniciAdi",
+  "Password": "parola"
+}
