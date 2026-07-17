@@ -9,7 +9,7 @@ namespace DdlExporter.Postgresql.Configuration
         public string DatabaseName { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public string Schema { get; set; } = "public";
         public string PgDumpPath { get; set; }
+        public string PgRestorePath { get; set; }
     }
 }
